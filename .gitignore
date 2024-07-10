@@ -1,0 +1,26 @@
+# In general
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+.DS_Store
+tmp/
+temp/
+secret/
+secrets/
+coverage/
+pkg/
+build/
+doc/
+
+# C#
+bin/
+obj/
+
+# Ruby
+*.gem
+*.rbc
+.rvmrc
+rdoc/
+
+# JS/TS
+node_modules/

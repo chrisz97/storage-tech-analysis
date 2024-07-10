@@ -1,0 +1,133 @@
+openapi: "3.0.2"
+info:
+  title: Simple Asset Management API
+  version: "1.0"
+servers:
+  - url: http://localhost
+paths:
+  /organizations:
+    get:
+      tags:
+       - "Organizations"
+      summary: Query Organizations
+      responses:
+        200:
+          description: Query Organizations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/organizations-response"
+    post:
+      tags:
+       - "Organizations"
+      summary: Create Organizations
+      parameters:
+       - name: name
+         in: query
+         schema:
+           type: string
+       - name: generate
+         in: query
+         schema:
+           type: integer
+           default: 0
+         required: true
+      responses:
+        201:
+          description: Create Organizations
+          content:
+           application/json:
+             schema:
+               type: object
+               properties:
+                 count:
+                   type: integer
+        400:
+          description: >
+            Name missing if generate not given or zero
+            or generate less than zero.
+  /organizations/{id}:
+    get:
+      tags:
+       - "Organizations"
+      summary: Get Organization
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Organization found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/organization-response"
+        404:
+          description: Organization not found
+    put:
+      tags:
+      - Organizations
+      summary: Change Organization
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Organization changed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/organization-response"
+        404:
+          description: Organization not found
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Query Users
+      responses:
+        200:
+          description: Query Users
+  /assets:
+    get:
+      tags:
+       - "Assets"
+      summary: Query Assets
+      responses:
+        200:
+          description: Query Assets
+          content:
+            application/json:
+              schema:
+                $ref: asset-schema.json
+components:
+  schemas:
+    organizations-response:
+      type: object
+      title: Organizations Response
+      properties:
+        duration:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: organization-schema.json
+      required:
+       - "duration"
+       - "data"
+    organization-response:
+      type: object
+      title: Organization Response
+      properties:
+        duration:
+          type: integer
+        data:
+          $ref: organization-schema.json
+      required:
+        - duration
+        - data
